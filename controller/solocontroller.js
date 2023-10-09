@@ -8,6 +8,7 @@ const parser=require('json2csv').Parser;
 exports.addData = async (req, res) => {
     try {
         let { name, rollno, eventname, email, phone,gender } = req.body;
+        console.log(eventname);
 
         const emailroll=email.split(".");
         const trimedroll=rollno.trim()
@@ -25,7 +26,7 @@ exports.addData = async (req, res) => {
                     eventname: [eventname],
                     gender 
                 });
-               await confirm.CnfReg({
+               await confirm.ConfrmReg({
                     eventname,
                     email,
                     name
@@ -46,7 +47,7 @@ exports.addData = async (req, res) => {
                     userrollExist.eventname.push(eventname);
                     await userrollExist.save();
                     console.log("Event Added");
-                    await confirm.CnfReg({
+                    await confirm.ConfrmReg({
                         eventname,
                         email:userrollExist.email,
                         name

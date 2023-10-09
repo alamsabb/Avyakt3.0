@@ -53,7 +53,7 @@ exports.addTeam = async (req, res) => {
                     memberemail: memberEmailArray,
                   });
                 const mail=[leademail,memberemail.split(",")];
-                await confirm.CnfReg({
+                await confirm.ConfrmReg({
                     eventname,
                     email:mail,
                     leadname,

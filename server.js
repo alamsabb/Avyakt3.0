@@ -7,7 +7,9 @@ const port=process.env.PORT;
 const routes=require('./routes/routes');
 const connect=require('./database/connect');
 const fetch=require('./routes/fetchdata');
+
 // const confirm=require('./util/confermationMail');
+
 
 
 app.use(express.urlencoded({extended:false}));

@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-exports.CnfReg = async (data)=>{    
+exports.ConfrmReg = async (data)=>{    
     try {
         let transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
@@ -11,96 +11,7 @@ exports.CnfReg = async (data)=>{
               pass: process.env.APP_PASSWORD,
             },
           });
-        // let solo=`<!DOCTYPE html>
-        // <html>
-        // <head>
-        // <meta name="viewport" content="width=device-width, initial-scale=1">
-        // <link rel="preconnect" href="https://fonts.googleapis.com">
-        // <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        // <link href="https://fonts.googleapis.com/css2?family=Shrikhand&display=swap" rel="stylesheet">
-        // <link href="https://fonts.cdnfonts.com/css/ethnocentric" rel="stylesheet">
-        // <link rel="preconnect" href="https://fonts.googleapis.com">
-        
-        // <link rel="preconnect" href="https://fonts.googleapis.com">
-        // <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        // <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
-        // <style>
-        //   .con{
-        //     display: flex;
-        //     justify-content: center;
-        //   }
-        // .card {
-        //   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-        //   transition: 0.3s;
-        //   width: 100%;
-        //   height: auto;
-        //   height: 1200px;
-        //   /* padding: 3px ; */
-        
-        // }
-        
-        
-        // .container {
-        //     margin-top: 33%;
-        //   padding: 2px 16px;
-        // }
-        // .text-otp {
-        //   position: absolute;
-        //   top: 64%;
-        //   left: 55%;
-        //   transform: translate(-50%, -50%);
-        //   text-align: center;
-        //   color: white;
-        //   font-family: 'Black Ops One', cursive;
-        // color: black;
-        // }
-        // .text-promo {
-        //   position: absolute;
-        //   top: 52%;
-        //   left: 49%;
-        //   transform: translate(-50%, -50%);
-        //   text-align: center;
-        //   color: white;
-        //   font-family: 'Shrikhand', cursive;
-        //   color: #C64596;
-        //   margin-top: 204px;
-        
-        // }
-        // .divo{
-        //     position: relative;
-        
-        // }
-        // </style>
-        // </head>
-        // <body>
-        //   <div class="con">
-        // <div class="card">
-        // <div class="divo">
-        //   <img src="https://i.postimg.cc/rw2fGG1S/promo.gif"  style="width:96%; height:30%; margin-left: 5px;margin-top: 6px;">
-          
-        // </div>
-        // <div class="divo">
-        //   <!-- <img src="https://i.postimg.cc/RC8Jm5cC/Purple-Futuristic-National-Space-Day-Animated-Social-Media.png" style="width:96%; height:30%; margin-left: 5px;margin-top: -4px;"> -->
-        //   <div class="text-promo">
-        //     <h3 style="font-size:60px;">Registration Successful for the </h3>
-        //     <h3 style="font-size:60px;">${(data.eventname)}</h3>
-        //   </div>
-        //   <!-- <div class="text-otp">
-        //     <h3 style="font-size:17px;"> 123678</h3>
-        //   </div> -->
-        // </div>
-        //   <div class="container">
-        //     <h4>Dept. Computer<br>Science & Engineering</h4> 
-        //     <h4></h4> 
-        //     <p>GIET University</p> 
-        //   </div>
-        // </div>
-        // </div>
-        
-        // </body>
-        // </html>
-        
-        // `;
+       
         
         let solo=`<!doctype html>
         <html lang="en-US">
@@ -315,7 +226,7 @@ exports.CnfReg = async (data)=>{
             // text: 'Your otp is:-', // plain text body
             // html: `<span style="color: black;font-size:20px;">Your opt is:-<span>
             // <b style="color: red;font-size:20px;">${data.otp}</b>`, // html body
-            html:Array.isArray(data.emial) ?solo:team,
+            html:Array.isArray(data.email) ?solo:team,
           });
         
           console.log("Message sent: %s", info.messageId, data.email);
