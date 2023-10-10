@@ -41,7 +41,7 @@ exports.ConfrmReg = async (data)=>{
                             </tr>
                             <tr>
                                 <td style="text-align:center;">
-                                    <img style="height: 61%; width: 95%; " src="https://i.postimg.cc/rw2fGG1S/promo.gif" title="logo" alt="logo">
+                                    <img width="300" src="https://i.postimg.cc/1RkLjXLd/Untitled-4.png" title="logo" alt="logo">
                                 </td>
                             </tr>
                             
@@ -60,12 +60,12 @@ exports.ConfrmReg = async (data)=>{
                                                 <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
                                                   <p>  </p>
                                                   <tr>
-                                                    <td>You Have Successfully Registered forthe event<td>
+                                                    <td>You Have Successfully Registered for the event<td>
                                                   <tr>
                                                   <tr>
                                                     <td>
-                                                      <span style="color: black;font-size:20px;">Your otp For the event ${data.eventname} is:-<span>
-                                                      <b style="color: red;font-size:20px;">${data.otp}</b>
+                                                      <span style="color: black;font-size:20px;"><span>
+                                                      <b style="color: red;font-size:20px;"> ${data.eventname} </b>
                                                     <td>
                                                   <tr>
                                                 </p>
@@ -132,7 +132,7 @@ exports.ConfrmReg = async (data)=>{
                             </tr>
                             <tr>
                                 <td style="text-align:center;">
-                                    <img width="200" src="https://i.postimg.cc/gk3q1vTZ/Screenshot-1-removebg-preview.png" title="logo" alt="logo">
+                                    <img width="300" src="https://i.postimg.cc/1RkLjXLd/Untitled-4.png" title="logo" alt="logo">
                                 </td>
                             </tr>
                             <tr>
@@ -147,14 +147,14 @@ exports.ConfrmReg = async (data)=>{
                                         </tr>
                                         <tr>
                                             <td style="padding:0 35px;">
-                                                <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">AVYAKT <strong style="color: red;">2.0</strong></h1>
+                                                <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">AVYAKT <strong style="color: #1e1e2d;">3.0</strong></h1>
                                                 <span
                                                     style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
                                                 <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
                                                   <p>  </p>
                                                   <tr>
                                                     <td>
-                                                      <h1><span style="color: red;">R</span>egistration Successfull for ${
+                                                      <h1><span style="color: red;"></span>Registration Successfull for ${
                                                         data.eventname
                                                       }</h1>
                                                     <td>

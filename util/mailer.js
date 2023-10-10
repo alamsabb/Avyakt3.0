@@ -18,7 +18,6 @@ exports.sendMail = async (data)=>{
     
     
     html:`
-    
     <!doctype html>
     <html lang="en-US">
     
@@ -47,7 +46,7 @@ exports.sendMail = async (data)=>{
                         </tr>
                         <tr>
                             <td style="text-align:center;">
-                                <img width="200" src="https://i.postimg.cc/gk3q1vTZ/Screenshot-1-removebg-preview.png" title="logo" alt="logo">
+                                <img width="300" src="https://i.postimg.cc/1RkLjXLd/Untitled-4.png" title="logo" alt="logo">
                             </td>
                         </tr>
                         <tr>
@@ -62,7 +61,7 @@ exports.sendMail = async (data)=>{
                                     </tr>
                                     <tr>
                                         <td style="padding:0 35px;">
-                                            <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">AVYAKT <strong>2.0</strong></h1>
+                                            <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">AVYAKT <strong>3.0</strong></h1>
                                             <span
                                                 style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
                                             <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
