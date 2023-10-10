@@ -11,7 +11,7 @@ exports.ConfrmReg = async (data)=>{
               pass: process.env.APP_PASSWORD,
             },
           });
-       
+          console.log(data);
         
         let solo=`<!doctype html>
         <html lang="en-US">
@@ -154,9 +154,9 @@ exports.ConfrmReg = async (data)=>{
                                                   <p>  </p>
                                                   <tr>
                                                     <td>
-                                                      <h1><span style="color: red;"></span>Registration Successfull for ${
+                                                      <h1>Registration Successfull for <span style="color: red;">${
                                                         data.eventname
-                                                      }</h1>
+                                                      }</span></h1>
                                                     <td>
                                                   <tr>
                                                   <tr>
@@ -222,13 +222,10 @@ exports.ConfrmReg = async (data)=>{
           let info = await transporter.sendMail({
             from: `"Registration Successfull 👻" <${process.env.APP_EMAIL}>`, // sender address
             to: `${data.email}`, // list of receivers
-            subject: `Registration Successfull for ${data.eventname}`, // Subject line
-            // text: 'Your otp is:-', // plain text body
-            // html: `<span style="color: black;font-size:20px;">Your opt is:-<span>
-            // <b style="color: red;font-size:20px;">${data.otp}</b>`, // html body
-            html:Array.isArray(data.email) ?solo:team,
+            subject: `Registration Successfull for ${data.eventname}`,
+            html:data.eventtype=='solo'?solo:team,
+
           });
-        
           console.log("Message sent: %s", info.messageId, data.email);
         
         

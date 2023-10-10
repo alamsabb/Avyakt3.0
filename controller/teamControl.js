@@ -40,6 +40,7 @@ exports.addTeam = async (req, res) => {
           memberrollno: { $regex: new RegExp(`^${trimedrolllead}$`, "i") },
           eventname: eventname.trim(),
         });
+       
         if(!memberasalead){
             if(!teamexist){
                 await team.create({
@@ -58,7 +59,8 @@ exports.addTeam = async (req, res) => {
                     email:mail,
                     leadname,
                     teamname,
-                    memberrollno
+                    memberrollno,
+                    eventtype:"team"
                 });    
                 return res.status(200).json({
                     message:'Event added'
