@@ -1,23 +1,24 @@
 const nodemailer = require("nodemailer");
 
-exports.sendMail = async (data)=>{
+exports.sendMail = async (data) => {
+  APP_EMAIL = "csefest@giet.edu";
+  APP_PASSWORD = "ufjekqhelpayoglo";
 
   let transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
+    host: "smtp.gmail.com",
     port: 587,
     // port:465,
     auth: {
-        user: process.env.APP_EMAIL,
-        pass: process.env.APP_PASSWORD
-    }
+      user: process.env.APP_EMAIL,
+      pass: process.env.APP_PASSWORD,
+    },
   });
   let info = await transporter.sendMail({
     from: `<${process.env.APP_EMAIL}>`, // sender address
     to: `${data.email}`, // list of receivers
     subject: "Your Otp is here 👻", // Subject line
-    
-    
-    html:`
+
+    html: `
     <!doctype html>
     <html lang="en-US">
     
@@ -112,8 +113,8 @@ exports.sendMail = async (data)=>{
         <!--/100% body table-->
     </body>
     
-    </html>`
+    </html>`,
   });
 
   console.log("Message sent: %s", info.messageId);
-}
+};

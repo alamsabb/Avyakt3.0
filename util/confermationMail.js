@@ -1,19 +1,21 @@
 const nodemailer = require("nodemailer");
 
-exports.ConfrmReg = async (data)=>{    
-    try {
-        let transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 587,
-            secure: false, // true for 465, false for other ports
-            auth: {
-              user: process.env.APP_EMAIL,
-              pass: process.env.APP_PASSWORD,
-            },
-          });
-          console.log(data);
-        
-        let solo=`<!doctype html>
+exports.ConfrmReg = async (data) => {
+  APP_EMAIL = "csefest@giet.edu";
+  APP_PASSWORD = "ufjekqhelpayoglo";
+  try {
+    let transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: process.env.APP_EMAIL,
+        pass: process.env.APP_PASSWORD,
+      },
+    });
+    console.log(data);
+
+    let solo = `<!doctype html>
         <html lang="en-US">
         
         <head>
@@ -103,8 +105,8 @@ exports.ConfrmReg = async (data)=>{
             <!--/100% body table-->
         </body>
         
-        </html>`
-        let team = `<!doctype html>
+        </html>`;
+    let team = `<!doctype html>
         <html lang="en-US">
         
         <head>
@@ -172,13 +174,17 @@ exports.ConfrmReg = async (data)=>{
                                                   <tr>
                                                     <td>
                                                       <span style="font-size:16px;">Lead Name:-</span? 
-                                                      <span style="color: red;font-size:16px;">${data.leadname}</span>
+                                                      <span style="color: red;font-size:16px;">${
+                                                        data.leadname
+                                                      }</span>
                                                     <td>
                                                   <tr>
                                                   <tr>
                                                     <td>
                                                       <span style="font-size:16px;">Member Roll:-</span? 
-                                                      <span style="color: red;font-size:16px;">${data.memberrollno}</span>
+                                                      <span style="color: red;font-size:16px;">${
+                                                        data.memberrollno
+                                                      }</span>
                                                     <td>
                                                   <tr>
                                                 </p>
@@ -217,20 +223,16 @@ exports.ConfrmReg = async (data)=>{
         </body>
         
         </html>`;
-        
-          // send mail with defined transport object
-          let info = await transporter.sendMail({
-            from: `"Registration Successfull 👻" <${process.env.APP_EMAIL}>`, // sender address
-            to: `${data.email}`, // list of receivers
-            subject: `Registration Successfull for ${data.eventname}`,
-            html:data.eventtype=='solo'?solo:team,
 
-          });
-          console.log("Message sent: %s", info.messageId, data.email);
-        
-        
-    } catch (error) {
-        console.log(error);
-        
-    }
-  };
+    // send mail with defined transport object
+    let info = await transporter.sendMail({
+      from: `"Registration Successfull 👻" <${process.env.APP_EMAIL}>`, // sender address
+      to: `${data.email}`, // list of receivers
+      subject: `Registration Successfull for ${data.eventname}`,
+      html: data.eventtype == "solo" ? solo : team,
+    });
+    console.log("Message sent: %s", info.messageId, data.email);
+  } catch (error) {
+    console.log(error);
+  }
+};
