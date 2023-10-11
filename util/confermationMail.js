@@ -1,16 +1,16 @@
 const nodemailer = require("nodemailer");
 
 exports.ConfrmReg = async (data) => {
-  APP_EMAIL = "csefest@giet.edu";
-  APP_PASSWORD = "ufjekqhelpayoglo";
+  const APP_EMAIL = "csefest@giet.edu";
+  const APP_PASSWORD = "ufjekqhelpayoglo";
   try {
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
       secure: false, // true for 465, false for other ports
       auth: {
-        user: process.env.APP_EMAIL,
-        pass: process.env.APP_PASSWORD,
+        user: APP_EMAIL,
+        pass: APP_PASSWORD,
       },
     });
     console.log(data);
@@ -226,7 +226,7 @@ exports.ConfrmReg = async (data) => {
 
     // send mail with defined transport object
     let info = await transporter.sendMail({
-      from: `"Registration Successfull 👻" <${process.env.APP_EMAIL}>`, // sender address
+      from: `"Registration Successfull 👻" <${APP_EMAIL}>`, // sender address
       to: `${data.email}`, // list of receivers
       subject: `Registration Successfull for ${data.eventname}`,
       html: data.eventtype == "solo" ? solo : team,
@@ -234,5 +234,9 @@ exports.ConfrmReg = async (data) => {
     console.log("Message sent: %s", info.messageId, data.email);
   } catch (error) {
     console.log(error);
+    return res.status(400).json({
+      message:"spam karna baandkar janta nahi hai kiya kar raha hai tu samjha na be"
+    });
+    
   }
 };

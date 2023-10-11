@@ -3,7 +3,7 @@ const app=express();
 const cors=require('cors');
 
 require('dotenv').config();
-const port=process.env.PORT||5028;
+const port=process.env.PORT||5000;
 const routes=require('./routes/routes');
 const connect=require('./database/connect');
 const fetch=require('./routes/fetchdata');

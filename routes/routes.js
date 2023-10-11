@@ -11,10 +11,15 @@ app.get('/health',(req,res)=>{
     return res.send("app is runnind fine")
 })
 
+const otplim=limit({
+    windowMs:60 * 1000,
+    max:5
+
+});
 
 const otpcontrol=require('../controller/otpcontroll')
-app.post('/sendotp',otpcontrol.sendotp);
-app.post('/verifyotp',otpcontrol.verifyOtp);
+app.post('/sendotp',otplim,otpcontrol.sendotp);
+app.post('/verifyotp',otplim,otpcontrol.verifyOtp);
 
 
 
@@ -24,13 +29,6 @@ app.post('/registersolo',lim,solocontrol.addData);
 
 const teamcontrol=require('../controller/teamControl');
 app.post('/addteam',lim,teamcontrol.addTeam);
-
-
-// // send & otp verify
-// const otpcon=require('../controller/otpconrol');
-// app.post('/sendotp',otpcon.sendotp);
-// app.post('/verifyotp',otpcon.verifyOtp);
-
 
 
 
