@@ -24,8 +24,9 @@ app.post('/verifyotp',otplim,otpcontrol.verifyOtp);
 
 
 // add event data
+const isvarify=require('../middleware/isverified')
 const solocontrol=require('../controller/solocontroller');
-app.post('/registersolo',lim,solocontrol.addData);
+app.post('/registersolo',lim,isvarify.isverified,solocontrol.addData);
 
 const teamcontrol=require('../controller/teamControl');
 app.post('/addteam',lim,teamcontrol.addTeam);

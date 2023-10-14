@@ -1,6 +1,8 @@
 const otpgen = require("../util/otpgen");
 const otpModel = require("../models/otp");
 const sendMail = require("../util/mailer");
+const randombit = require("../util/randombit");
+const bitdb = require("../models/randombit");
 
 exports.sendotp = async (req, res) => {
   try {
@@ -64,9 +66,21 @@ exports.verifyOtp = async (req, res) => {
     } else {
       if (OtpData) {
         if (OtpData.otp === otpnum) {
+          const mbt = "1";
+          const slbit = "1";
+          const bit = await randombit.generatebit({
+            middle: mbt,
+            secondlast: slbit,
+            botp: otpnum,
+          });
           await otpModel.deleteOne({ otp: OtpData.otp });
+          await bitdb.create({
+            email: email,
+            randombit: bit,
+          });
           return res.status(200).json({
             message: "Verified",
+            data: bit,
           });
         } else {
           return res.status(401).json({
@@ -76,6 +90,7 @@ exports.verifyOtp = async (req, res) => {
       } else {
         return res.status(400).json({
           message: "Otp has been Expired",
+          data: bit,
         });
       }
     }
