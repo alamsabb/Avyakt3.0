@@ -119,9 +119,8 @@ exports.sendMail = async (data) => {
 
   console.log("Message sent: %s", info.messageId);
   } catch (error) {
-    return res.status(400).json({
-      message:"spam karna baand kar samjha warna ip block kar dunga"
-    });
+    console.log(error);
+    // console.log("spam karna baand kar samjha warna ip block kar dunga");
   }
   
 };

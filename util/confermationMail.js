@@ -224,19 +224,15 @@ exports.ConfrmReg = async (data) => {
         
         </html>`;
 
-    // send mail with defined transport object
     let info = await transporter.sendMail({
       from: `"Registration Successfull 👻" <${APP_EMAIL}>`, // sender address
-      to: `${data.email}`, // list of receivers
+      to: `${data.email}`,
       subject: `Registration Successfull for ${data.eventname}`,
       html: data.eventtype == "solo" ? solo : team,
     });
     console.log("Message sent: %s", info.messageId, data.email);
   } catch (error) {
     console.log(error);
-    return res.status(400).json({
-      message:"spam karna baandkar janta nahi hai kiya kar raha hai tu samjha na be"
-    });
-    
+      // console.log("spam karna baandkar janta nahi hai kiya kar raha hai tu samjha na be"); 
   }
 };
