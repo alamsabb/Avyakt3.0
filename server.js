@@ -11,7 +11,7 @@ const fetch=require('./routes/fetchdata');
 // const confirm=require('./util/confermationMail');
 
 const corsOptions = {
-    origin: 'http://localhost:8030',
+    origin: 'http://csefest.in:8030',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: false, // Set to true if you're using cookies or sessions
     optionsSuccessStatus: 204,
