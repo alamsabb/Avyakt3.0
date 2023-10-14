@@ -9,9 +9,6 @@ exports.fetchdata = async (req, res) => {
       // console.log(events);
       return res.status(200).json(events);
     } else {
-      // const objid=new mongoose.Types.ObjectId(type);
-      // const eventsbyid=await event.findOne({_id:new mongoose.Types.ObjectId(type)});
-      // console.log(eventsbyid);
       const events = await event.find({ eventType: type });
       return res.status(200).json(events);
     }

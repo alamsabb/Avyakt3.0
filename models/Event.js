@@ -29,6 +29,12 @@ const eventSchema = new mongoose.Schema({
   eventImage: {
     type: String,
   },
+  facultycordinator:{
+    type:[String]
+  },
+  facultycordinatorphone:{
+    type:[String]
+  },
   docUrl:{
     type:String,
     default:null,

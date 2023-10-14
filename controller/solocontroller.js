@@ -9,7 +9,6 @@ exports.addData = async (req, res) => {
 
     const emailroll = email.split(".");
     const trimedroll = rollno.trim();
-    // console.log(emailroll[0]);
     const userrollExist = await solo.findOne({
       rollno: { $regex: new RegExp(`^${trimedroll}$`, "i") },
     });
@@ -33,13 +32,13 @@ exports.addData = async (req, res) => {
         });
         console.log("New user added");
         return res.status(200).json({
-          msg: "New user added",
+          message: "New user added",
         });
       } else {
         if (userrollExist.eventname.includes(eventname)) {
           console.log("event already their");
           return res.status(400).json({
-            message: "Event already added", // Updated error message
+            message: "Event already added",
           });
         } else {
           userrollExist.eventname.push(eventname);
@@ -108,7 +107,6 @@ exports.fetchcsv = async (req, res) => {
     );
     return res.status(200).end(csvdsata);
   } catch (error) {
-    // console.log(error);
     return res.status(400).json({
       message: error.message,
     });
