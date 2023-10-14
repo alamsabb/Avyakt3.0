@@ -10,7 +10,7 @@ exports.addData = async (req, res) => {
     const emailroll = email.split(".");
     const trimedroll = rollno.trim();
     const userrollExist = await solo.findOne({
-      rollno: { $regex: new RegExp(`^${trimedroll}$`, "i") },
+      rollno: trimedroll.toUpperCase(),
     });
     if (emailroll[0].toLowerCase() === trimedroll.toLowerCase()) {
       if (!userrollExist) {
