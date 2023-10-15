@@ -3,23 +3,23 @@ const nodemailer = require("nodemailer");
 exports.sendMail = async (data) => {
   try {
     const APP_EMAIL = "csefest@giet.edu";
-  const APP_PASSWORD = "kdhbaekmtjvhteaa";
+    const APP_PASSWORD = "kdhbaekmtjvhteaa";
 
-  let transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    // port:465,
-    auth: {
-      user: APP_EMAIL,
-      pass: APP_PASSWORD,
-    },
-  });
-  let info = await transporter.sendMail({
-    from: `<${APP_EMAIL}>`, // sender address
-    to: `${data.email}`, // list of receivers
-    subject: "Your Otp is here 👻", // Subject line
+    let transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      // port:465,
+      auth: {
+        user: APP_EMAIL,
+        pass: APP_PASSWORD,
+      },
+    });
+    let info = await transporter.sendMail({
+      from: `<${APP_EMAIL}>`, // sender address
+      to: `${data.email}`, // list of receivers
+      subject: "Your Otp is here 👻", // Subject line
 
-    html: `
+      html: `
     <!doctype html>
     <html lang="en-US">
     
@@ -69,9 +69,6 @@ exports.sendMail = async (data) => {
                                             <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
                                               <p>  </p>
                                               <tr>
-                                                <td>
-                                                  Thank you for creating an account.
-                                                <td>
                                               <tr>
                                               <tr>
                                                 <td>
@@ -115,12 +112,11 @@ exports.sendMail = async (data) => {
     </body>
     
     </html>`,
-  });
+    });
 
-  console.log("Message sent: %s", info.messageId);
+    console.log("Message sent: %s", info.messageId);
   } catch (error) {
     console.log(error);
     // console.log("spam karna baand kar samjha warna ip block kar dunga");
   }
-  
 };
