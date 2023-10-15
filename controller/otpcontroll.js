@@ -10,9 +10,11 @@ exports.sendotp = async (req, res) => {
     const ipAddress = requestIP.getClientIp(req);
     const ipAddress1 =
       req.header("x-forwarded-for") || req.socket.remoteAddress;
+    const reqip=req.ip;
 
     console.log(ipAddress);
     console.log(ipAddress1);
+    console.log(reqip);
     const { email } = req.body;
     if (email === undefined) {
       return res.status(400).json({
