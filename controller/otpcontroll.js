@@ -3,9 +3,13 @@ const otpModel = require("../models/otp");
 const sendMail = require("../util/mailer");
 const randombit = require("../util/randombit");
 const bitdb = require("../models/randombit");
+const IP = require('ip');
+
 
 exports.sendotp = async (req, res) => {
   try {
+    const ipAddress = IP.address();
+    console.log(ipAddress);
     const { email } = req.body;
     if (email === undefined) {
       return res.status(400).json({
