@@ -1,15 +1,12 @@
 const express = require("express");
 const app = express();
 const limit = require("express-rate-limit");
-const IP = require('ip');
 
 const lim = limit({
   windowMs: 20 * 1000,
   max: 5,
 });
 app.get("/health", (req, res) => {
-    const ipAddress = IP.address();
-    console.log(ipAddress);
   return res.send("app is runnind fine");
 });
 
