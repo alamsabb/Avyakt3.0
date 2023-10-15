@@ -3,8 +3,7 @@ const otpModel = require("../models/otp");
 const sendMail = require("../util/mailer");
 const randombit = require("../util/randombit");
 const bitdb = require("../models/randombit");
-const IP = require('ip');
-
+const IP = require("ip");
 
 exports.sendotp = async (req, res) => {
   try {
