@@ -3,12 +3,16 @@ const otpModel = require("../models/otp");
 const sendMail = require("../util/mailer");
 const randombit = require("../util/randombit");
 const bitdb = require("../models/randombit");
-const IP = require("ip");
+const requestIP = require("request-ip");
 
 exports.sendotp = async (req, res) => {
   try {
-    const ipAddress = IP.address();
+    const ipAddress = requestIP.getClientIp(req);
+    const ipAddress1 =
+      req.header("x-forwarded-for") || req.socket.remoteAddress;
+
     console.log(ipAddress);
+    console.log(ipAddress1);
     const { email } = req.body;
     if (email === undefined) {
       return res.status(400).json({
