@@ -3,7 +3,7 @@ const nodemailer = require("nodemailer");
 exports.sendMail = async (data) => {
   try {
     const APP_EMAIL = "csefest@giet.edu";
-  const APP_PASSWORD = "ufjekqhelpayoglo";
+  const APP_PASSWORD = "kdhbaekmtjvhteaa";
 
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
