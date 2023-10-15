@@ -12,7 +12,7 @@ app.get('/health',(req,res)=>{
 })
 
 const otplim=limit({
-    windowMs:60 * 1000,
+    windowMs:5*60 * 1000,
     max:5
 
 });
