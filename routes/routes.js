@@ -26,7 +26,6 @@ const otplim = limit({
       console.log("header", ipAddress1);
       console.log("req.ip", reqip);
       let ipblocked = await ipdb.findOne({ ip: ipAddress });
-      console.log(ipblocked);
       if (!ipblocked) {
         await ipdb.create({
           ip: ipAddress,
