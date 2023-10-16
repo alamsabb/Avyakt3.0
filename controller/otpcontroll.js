@@ -72,7 +72,7 @@ exports.verifyOtp = async (req, res) => {
     let ipblocked = await ipdb.findOne({
       ip: ipAddress,
     });
-    if(!ipblocked || ipblocked<=20){
+    if(!ipblocked || ipblocked.count<=20){
       const { email, otp } = req.body;
       const OtpData = await otpModel.findOne({ email: email });
       let otpnum = Number(otp);
