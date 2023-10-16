@@ -1,65 +1,78 @@
 const solo = require("../models/users/solo");
 const confirm = require("../util/confermationMail");
 const parser = require("json2csv").Parser;
+const ipdb = require("../models/ipblock");
+const requestIP = require("request-ip");
 
 exports.addData = async (req, res) => {
   try {
-    let { name, rollno, eventname, email, phone, gender } = req.body;
-    console.log(eventname);
-
-    const emailroll = email.split(".");
-    const trimedroll = rollno.trim();
-    const userrollExist = await solo.findOne({
-      rollno: { $regex: new RegExp(`^${trimedroll}$`, "i") },
+    const ipAddress = requestIP.getClientIp(req);
+    let ipblocked = await ipdb.findOne({
+      ip: ipAddress,
     });
-    if (emailroll[0].toLowerCase() === trimedroll.toLowerCase()) {
-      if (!userrollExist) {
-        const upperroll = trimedroll.toUpperCase();
-        console.log(upperroll);
-        await solo.create({
-          name,
-          rollno: upperroll,
-          email,
-          phone,
-          eventname: [eventname],
-          gender,
-        });
-        await confirm.ConfrmReg({
-          eventname,
-          email,
-          name,
-          eventtype:'solo'
-        });
-        console.log("New user added");
-        return res.status(200).json({
-          message: "New user added",
-        });
-      } else {
-        if (userrollExist.eventname.includes(eventname)) {
-          console.log("event already their");
-          return res.status(400).json({
-            message: "Event already added",
+    if (!ipblocked || ipblocked.count < 20){
+      let { name, rollno, eventname, email, phone, gender } = req.body;
+      console.log(eventname);
+  
+      const emailroll = email.split(".");
+      const trimedroll = rollno.trim();
+      const userrollExist = await solo.findOne({
+        rollno: { $regex: new RegExp(`^${trimedroll}$`, "i") },
+      });
+      if (emailroll[0].toLowerCase() === trimedroll.toLowerCase()) {
+        if (!userrollExist) {
+          const upperroll = trimedroll.toUpperCase();
+          console.log(upperroll);
+          await solo.create({
+            name,
+            rollno: upperroll,
+            email,
+            phone,
+            eventname: [eventname],
+            gender,
           });
-        } else {
-          userrollExist.eventname.push(eventname);
-          await userrollExist.save();
-          console.log("Event Added");
           await confirm.ConfrmReg({
             eventname,
-            email: userrollExist.email,
+            email,
             name,
             eventtype:'solo'
           });
+          console.log("New user added");
           return res.status(200).json({
-            message: "Event Added",
+            message: "New user added",
           });
+        } else {
+          if (userrollExist.eventname.includes(eventname)) {
+            console.log("event already their");
+            return res.status(400).json({
+              message: "Event already added",
+            });
+          } else {
+            userrollExist.eventname.push(eventname);
+            await userrollExist.save();
+            console.log("Event Added");
+            await confirm.ConfrmReg({
+              eventname,
+              email: userrollExist.email,
+              name,
+              eventtype:'solo'
+            });
+            return res.status(200).json({
+              message: "Event Added",
+            });
+          }
         }
+      } else {
+        return res.status(400).json({
+          message: "Add your official mail of Giet",
+        });
       }
-    } else {
-      return res.status(400).json({
-        message: "Add your official mail of Giet",
+    }else{
+      return res.status(405).json({
+        message:"you have tried to spam the server so you have been blocked"
       });
     }
+   
   } catch (error) {
     console.error(error);
 
