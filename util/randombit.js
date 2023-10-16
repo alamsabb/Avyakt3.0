@@ -1,15 +1,4 @@
-
-
 exports.generatebit = (data) => {
-  const firstBits = Math.floor(Math.random() * 4)
-    .toString(2)
-    .padStart(2, "0");
-
-  // Generate the last 3 bits randomly
-  const lastBits = Math.floor(Math.random() * 8)
-    .toString(2)
-    .padStart(3, "0");
-
   let middleBit = "0";
   if (data.middle === "1") {
     middleBit = "1";
@@ -23,10 +12,16 @@ exports.generatebit = (data) => {
     secondToLastBit = "0";
   }
   const otp = data.botp;
-  binaryotp = otp.toString(2);
+  const otpinstr = otp.toString();
 
-  const binaryNumber =
-    firstBits + middleBit + secondToLastBit + lastBits + binaryotp;
+  const modifiedOTP =
+    otpinstr.substring(0, 2) +
+    middleBit +
+    otpinstr.substring(2, 3) +
+    secondToLastBit +
+    otpinstr.substring(3, 4);
+
+  const binaryNumber = parseInt(modifiedOTP, 10).toString(2);
 
   return binaryNumber;
 };
