@@ -19,7 +19,7 @@ app.get('/fetchcsv/:eventname/:gender',solocontrol.fetchcsv);
 
 
 const dat=require('../controller/EventControl');
-app.get('/fettchevent/:type',lim,dat.fetchdata);
+app.get('/fettchevent/:type',dat.fetchdata);
 app.get('/fettcheventbyid/:type',dat.fetchdatabyid);
 
 
