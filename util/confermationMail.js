@@ -13,7 +13,7 @@ exports.ConfrmReg = async (data) => {
         pass: APP_PASSWORD,
       },
     });
-    console.log(data);
+    // console.log(data);
 
     let solo = `<!doctype html>
         <html lang="en-US">

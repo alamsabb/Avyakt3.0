@@ -97,6 +97,20 @@ exports.fetchcsv = async (req, res) => {
   try {
     const { eventname, gender } = req.params;
     let users = [];
+   if(gender==='all'){
+    const userdata = await solo.find({ eventname: eventname });
+    // console.log(userdata);
+    userdata.forEach((user) => {
+      const { name, rollno, email, phone, gender } = user;
+      users.push({ rollno, name, email, phone, gender });
+    });
+    // console.log(users);
+    if (users.length === 0) {
+      return res.status(400).json({
+        message: `no user registerd for ${eventname} or no event is present`,
+      });
+    }
+   }else{
     const userdata = await solo.find({ eventname: eventname, gender: gender });
     // console.log(userdata);
     userdata.forEach((user) => {
@@ -109,6 +123,7 @@ exports.fetchcsv = async (req, res) => {
         message: `no user registerd for ${eventname} or no event is present`,
       });
     }
+   }
     const csvfield = ["Roll no", "Name", "Email", "phone", "gender"];
     const csvparser = new parser({ csvfield });
     const csvdsata = csvparser.parse(users);

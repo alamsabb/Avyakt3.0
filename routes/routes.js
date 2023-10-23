@@ -66,6 +66,6 @@ const solocontrol = require("../controller/solocontroller");
 app.post("/registersolo", lim, isvarify.isverified, solocontrol.addData);
 
 const teamcontrol = require("../controller/teamControl");
-app.post("/addteam", lim, teamcontrol.addTeam);
+app.post("/addteam", lim,isvarify.isverified, teamcontrol.addTeam);
 
 module.exports = app;
