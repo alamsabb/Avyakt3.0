@@ -44,39 +44,50 @@ exports.addTeam = async (req, res) => {
             memberrollno: { $regex: new RegExp(`^${trimedrolllead}$`, "i") },
             eventname: eventname.trim(),
           });
+          const memberAlreadyRegistered = await team.findOne({
+            eventname: eventname,
+            memberrollno: { $in: memberRollArray },
+          });
 
           if (!memberasalead) {
-            if (!teamexist) {
-              await team.create({
-                teamname,
-                leadname,
-                leademail: email,
-                leadrollno,
-                leadphone,
-                eventname,
-                memberrollno: memberRollArray,
-                memberemail: memberEmailArray,
-              });
-              const mail = [email, memberemail.split(",")];
-              await confirm.ConfrmReg({
-                eventname,
-                email: mail,
-                leadname,
-                teamname,
-                memberrollno,
-                eventtype: "team",
-              });
-              return res.status(200).json({
-                message: "Event added",
-              });
+            if (!memberAlreadyRegistered) {
+              if (!teamexist) {
+                await team.create({
+                  teamname,
+                  leadname,
+                  leademail: email,
+                  leadrollno,
+                  leadphone,
+                  eventname,
+                  memberrollno: memberRollArray,
+                  memberemail: memberEmailArray,
+                });
+                const mail = [email, memberemail.split(",")];
+                await confirm.ConfrmReg({
+                  eventname,
+                  email: mail,
+                  leadname,
+                  teamname,
+                  memberrollno,
+                  eventtype: "team",
+                });
+                return res.status(200).json({
+                  message: "Event added",
+                });
+              } else {
+                return res.status(400).json({
+                  message: "You have Already Rgisterd as a team",
+                });
+              }
             } else {
               return res.status(400).json({
-                message: "You have Already Rgisterd as a team",
+                message: "Member is already registered for this event, select new member",
               });
             }
           } else {
             return res.status(400).json({
-              message: "One of you Member is registerd as a lead for the event",
+              message:
+                "You can't register as a lead you are the member of a team",
             });
           }
         } else {
@@ -126,8 +137,8 @@ exports.teamfetchcsv = async (req, res) => {
         memberrollno,
         memberemail,
       } = user;
-      const memberInforoll = memberrollno.join(',')
-      const memberInfoemail = memberemail.join(',')
+      const memberInforoll = memberrollno.join(",");
+      const memberInfoemail = memberemail.join(",");
       users.push({
         teamname,
         leadname,
@@ -139,7 +150,7 @@ exports.teamfetchcsv = async (req, res) => {
         // memberemail,
         // memberInfo,
         memberInfoemail,
-        memberInforoll
+        memberInforoll,
       });
     });
     if (users.length === 0) {
@@ -148,14 +159,14 @@ exports.teamfetchcsv = async (req, res) => {
       });
     }
     const fields = [
-      'teamname',
-      'leadname',
-      'leademail',
-      'leadphone',
-      'leadrollno',
-      'eventname',
-      'memberInfoemail',
-      'memberInforoll'
+      "teamname",
+      "leadname",
+      "leademail",
+      "leadphone",
+      "leadrollno",
+      "eventname",
+      "memberInfoemail",
+      "memberInforoll",
     ];
     const csvparser = new parser({ fields });
     const csvdsata = csvparser.parse(users);
