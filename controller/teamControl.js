@@ -30,8 +30,8 @@ exports.addTeam = async (req, res) => {
       const trimedrolllead = leadrollno.trim();
       const isleadValidlead = isEmailPrefixMatchingRoll(email, trimedrolllead);
       if (isleadValidlead) {
-        const memberRollArray = await memberrollno.split(",");
-        const memberEmailArray = await memberemail.split(",");
+        const memberRollArray = await memberrollno.split(",").map((rollno) => rollno.trim());
+        const memberEmailArray = await memberemail.split(",").map((email) => email.trim());
         const isValid = await memberRollArray.every((rollno, index) =>
           isEmailPrefixMatchingRoll(memberEmailArray[index], rollno)
         );
