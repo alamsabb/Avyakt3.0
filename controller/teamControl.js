@@ -54,10 +54,10 @@ exports.addTeam = async (req, res) => {
               if (!teamexist) {
                 await team.create({
                   teamname,
-                  leadname,
+                  leadname: leadname.trim(),
                   leademail: email,
-                  leadrollno,
-                  leadphone,
+                  leadrollno:leadrollno.trim(),
+                  leadphone:leadphone.trim(),
                   eventname,
                   memberrollno: memberRollArray,
                   memberemail: memberEmailArray,
