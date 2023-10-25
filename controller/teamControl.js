@@ -9,6 +9,16 @@ function isEmailPrefixMatchingRoll(email, rollno) {
   const trimmedRoll = rollno.trim();
   return emailParts[0].toLowerCase() === trimmedRoll.toLowerCase();
 }
+async function isLead(rollno, eventname) {
+  // console.log(rollno, eventname);
+  const teamexist = await team.findOne({
+    leadrollno: { $regex: new RegExp(`^${rollno}$`, "i") },
+    eventname: eventname.trim(),
+  });
+  const result = teamexist !== null;
+  // console.log(result);
+  return result;
+}
 
 exports.addTeam = async (req, res) => {
   try {
@@ -27,11 +37,17 @@ exports.addTeam = async (req, res) => {
         memberrollno,
         memberemail,
       } = req.body;
+      // console.log(req.body);
       const trimedrolllead = leadrollno.trim();
       const isleadValidlead = isEmailPrefixMatchingRoll(email, trimedrolllead);
+
       if (isleadValidlead) {
-        const memberRollArray = await memberrollno.split(",").map((rollno) => rollno.trim());
-        const memberEmailArray = await memberemail.split(",").map((email) => email.trim());
+        const memberRollArray = await memberrollno
+          .split(",")
+          .map((rollno) => rollno.trim());
+        const memberEmailArray = await memberemail
+          .split(",")
+          .map((email) => email.trim());
         const isValid = await memberRollArray.every((rollno, index) =>
           isEmailPrefixMatchingRoll(memberEmailArray[index], rollno)
         );
@@ -40,40 +56,69 @@ exports.addTeam = async (req, res) => {
             leadrollno: { $regex: new RegExp(`^${trimedrolllead}$`, "i") },
             eventname: eventname.trim(),
           });
-          const memberasalead = await team.findOne({
-            memberrollno: { $regex: new RegExp(`^${trimedrolllead}$`, "i") },
-            eventname: eventname.trim(),
-          });
+          // const memberasalead = await team.findOne({
+          //   memberrollno: { $regex: new RegExp(`^${trimedrolllead}$`, "i") },
+          //   eventname: eventname.trim(),
+          // });
+          // const memberasalead = await memberRollArray.every(async (rollno) => 
+          //   await isLead(rollno, eventname)
+          // );
+          const anyMemberIsLead = await Promise.all(memberRollArray.map(async (rollno) =>
+          await isLead(rollno, eventname)
+        ));
           const memberAlreadyRegistered = await team.findOne({
             eventname: eventname,
             memberrollno: { $in: memberRollArray },
           });
+          // console.log(memberasalead);
 
-          if (!memberasalead) {
+          if (!anyMemberIsLead.includes(true)) {
             if (!memberAlreadyRegistered) {
               if (!teamexist) {
-                await team.create({
-                  teamname,
-                  leadname: leadname.trim(),
-                  leademail: email,
-                  leadrollno:leadrollno.trim(),
-                  leadphone:leadphone.trim(),
-                  eventname,
-                  memberrollno: memberRollArray,
-                  memberemail: memberEmailArray,
-                });
-                const mail = [email, memberemail.split(",")];
-                await confirm.ConfrmReg({
-                  eventname,
-                  email: mail,
-                  leadname,
-                  teamname,
-                  memberrollno,
-                  eventtype: "team",
-                });
-                return res.status(200).json({
-                  message: "Event added",
-                });
+                if (memberrollno === "" || memberemail === "") {
+                  await team.create({
+                    teamname,
+                    leadname: leadname.trim(),
+                    leademail: email,
+                    leadrollno: leadrollno.trim().toUpperCase(),
+                    leadphone: leadphone.trim(),
+                    eventname,
+                  });
+                  await confirm.ConfrmReg({
+                    eventname,
+                    email,
+                    leadname,
+                    teamname,
+                    memberrollno,
+                    eventtype: "solo",
+                  });
+                  return res.status(200).json({
+                    message: "Event added",
+                  });
+                } else {
+                  await team.create({
+                    teamname,
+                    leadname: leadname.trim(),
+                    leademail: email,
+                    leadrollno: leadrollno.trim().toUpperCase(),
+                    leadphone: leadphone.trim(),
+                    eventname,
+                    memberrollno: memberRollArray,
+                    memberemail: memberEmailArray,
+                  });
+                  const mail = [email, memberemail.split(",")];
+                  await confirm.ConfrmReg({
+                    eventname,
+                    email: mail,
+                    leadname,
+                    teamname,
+                    memberrollno,
+                    eventtype: "team",
+                  });
+                  return res.status(200).json({
+                    message: "Event added",
+                  });
+                }
               } else {
                 return res.status(400).json({
                   message: "You have Already Rgisterd as a team",
@@ -81,13 +126,14 @@ exports.addTeam = async (req, res) => {
               }
             } else {
               return res.status(400).json({
-                message: "Member is already registered for this event, select new member",
+                message:
+                  "Member is already registered for this event, select new member",
               });
             }
           } else {
             return res.status(400).json({
               message:
-                "You can't register as a lead you are the member of a team",
+                "Member is already registered as a lead for this event, select new member",
             });
           }
         } else {
@@ -110,7 +156,7 @@ exports.addTeam = async (req, res) => {
 
     if (error.code === 11000) {
       return res.status(400).json({
-        message: "Team name or email already exist.", // Updated error message
+        message: "Team name or email already exist.",
       });
     } else {
       console.error(error);
@@ -146,9 +192,6 @@ exports.teamfetchcsv = async (req, res) => {
         leadphone,
         leadrollno,
         eventname,
-        // memberrollno,
-        // memberemail,
-        // memberInfo,
         memberInfoemail,
         memberInforoll,
       });
