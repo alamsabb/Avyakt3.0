@@ -8,15 +8,13 @@ const routes=require('./routes/routes');
 const connect=require('./database/connect');
 const fetch=require('./routes/fetchdata');
 
-// const confirm=require('./util/confermationMail');
-
 
 
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 app.use(cors());
 app.use(express.static('public'));
-app.set('trust proxy', true);
+app.set('trust proxy', false);
 
 app.use('/',routes);
 app.use('/fetchdata',fetch);

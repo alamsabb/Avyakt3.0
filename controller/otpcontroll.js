@@ -8,6 +8,7 @@ const requestIP = require("request-ip");
 
 exports.sendotp = async (req, res) => {
   try {
+    const pattern = /^[0-9]{2}(cse|cseaiml|cseds|cst|bca|mca)\d+\.\w+@giet\.edu$/;
     const ipAddress = requestIP.getClientIp(req);
     let ipblocked = await ipdb.findOne({
       ip: ipAddress,
@@ -19,37 +20,41 @@ exports.sendotp = async (req, res) => {
           message: "enter the email",
         });
       } else {
-        const trimedemail = email.trim();
-        const emailroll = trimedemail.split("@");
-        if (emailroll[1] === "giet.edu") {
-          let Otp = await otpModel.findOne({ email: email });
+        if (pattern.test(email)) {
+          const trimedemail = email.trim();
+          const emailroll = trimedemail.split("@");
+          if (emailroll[1] === "giet.edu") {
+            let Otp = await otpModel.findOne({ email: email });
 
-          if (!Otp) {
-            let otpCode = await otpgen.genotp();
-            await otpModel.create({
-              email,
-              otp: otpCode,
-            });
-            sendMail.sendMail({
-              email,
-              otp: otpCode,
-            });
-            return res.status(200).json({
-              message: "Otp has been sent to your email.",
-            });
+            if (!Otp) {
+              let otpCode = await otpgen.genotp();
+              await otpModel.create({
+                email,
+                otp: otpCode,
+              });
+              sendMail.sendMail({
+                email,
+                otp: otpCode,
+              });
+              return res.status(200).json({
+                message: "Otp has been sent to your email.",
+              });
+            } else {
+              sendMail.sendMail({
+                email,
+                otp: Otp.otp,
+              });
+              return res.status(200).json({
+                message: "Otp has been sent to your email.",
+              });
+            }
           } else {
-            sendMail.sendMail({
-              email,
-              otp: Otp.otp,
-            });
-            return res.status(200).json({
-              message: "Otp has been sent to your email.",
+            return res.status(400).json({
+              message: "Enter your official mail",
             });
           }
         } else {
-          return res.status(400).json({
-            message: "Enter your official mail",
-          });
+          return res.status(400).json({ message: "Enter a valid mail" });
         }
       }
     } else {
@@ -67,12 +72,11 @@ exports.sendotp = async (req, res) => {
 
 exports.verifyOtp = async (req, res) => {
   try {
-    
     const ipAddress = requestIP.getClientIp(req);
     let ipblocked = await ipdb.findOne({
       ip: ipAddress,
     });
-    if(!ipblocked || ipblocked.count<=20){
+    if (!ipblocked || ipblocked.count <= 20) {
       const { email, otp } = req.body;
       const OtpData = await otpModel.findOne({ email: email });
       let otpnum = Number(otp);
@@ -110,12 +114,11 @@ exports.verifyOtp = async (req, res) => {
           });
         }
       }
-    }else{
+    } else {
       return res.status(405).json({
-        message:"you have been blocked contact admin"
-      })
+        message: "you have been blocked contact admin",
+      });
     }
-    
   } catch (error) {
     console.log(error);
     return res.status(500).json({
