@@ -68,7 +68,7 @@ app.post("/registersolo", lim, isvarify.isverified, solocontrol.addData);
 const teamcontrol = require("../controller/teamControl");
 app.post("/addteam", lim,isvarify.isverified, teamcontrol.addTeam);
 
-const report=require('../controller/Report');
-app.get('/report',report.genreport);
+// const report=require('../controller/Report');
+// app.get('/report',report.genreport);
 
 module.exports = app;
