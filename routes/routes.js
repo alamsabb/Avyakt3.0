@@ -74,5 +74,7 @@ app.get('/ip2', (request, response) => response.send(request.headers['x-forwarde
 
 // const report=require('../controller/Report');
 // app.get('/report',report.genreport);
+const DreamTeam = require("../controller/DreamTeam");
+app.get("/Dream-Team",DreamTeam.getDreeamTeam);
 
 module.exports = app;
