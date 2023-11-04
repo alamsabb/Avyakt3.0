@@ -68,6 +68,9 @@ app.post("/registersolo", lim, isvarify.isverified, solocontrol.addData);
 const teamcontrol = require("../controller/teamControl");
 app.post("/addteam", lim,isvarify.isverified, teamcontrol.addTeam);
 
+app.get('/ip', (request, response) => response.send(request.ip))
+
+
 // const report=require('../controller/Report');
 // app.get('/report',report.genreport);
 

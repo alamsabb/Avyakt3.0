@@ -18,6 +18,7 @@ app.set('trust proxy', false);
 
 app.use('/',routes);
 app.use('/fetchdata',fetch);
+app.set('trust proxy', 1)
 
 
 connect.connectDB();
