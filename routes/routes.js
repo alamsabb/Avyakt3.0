@@ -69,6 +69,7 @@ const teamcontrol = require("../controller/teamControl");
 app.post("/addteam", lim,isvarify.isverified, teamcontrol.addTeam);
 
 app.get('/ip', (request, response) => response.send(request.ip))
+app.get('/ip2', (request, response) => response.send(request.headers['x-forwarded-for']))
 
 
 // const report=require('../controller/Report');
