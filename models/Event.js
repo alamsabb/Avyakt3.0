@@ -17,6 +17,9 @@ const eventSchema = new mongoose.Schema({
   maxTeamSize: {
     type: Number,
   },
+  minTeamSize: {
+    type: Number,
+  },
   coordinatorName: {
     type: [String],
   },
