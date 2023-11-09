@@ -14,7 +14,7 @@ app.get("/health", (req, res) => {
 
 const otplim = limit({
   windowMs: 5 * 60 * 1000,
-  max: 20,
+  max: 6,
   handler: async (req, res) => {
     try {
       const ipAddress = requestIP.getClientIp(req);
