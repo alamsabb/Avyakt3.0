@@ -32,3 +32,20 @@ exports.fetchdatabyid = async (req, res) => {
     return res.status(500).json({ message: "Error fetching events" });
   }
 };
+
+exports.fetchdataandroid = async (req, res) => {
+  try {
+    const { type } = req.params;
+    if (type === "all") {
+      const events = await event.find();
+      // console.log(events);
+      return res.status(200).json(events);
+    } else {
+      const events = await event.find({ eventType: type,eventClosed:"False" });
+      return res.status(200).json(events);
+    }
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    return res.status(500).json({ message: "Error fetching events" });
+  }
+};

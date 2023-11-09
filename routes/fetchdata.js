@@ -18,7 +18,9 @@ app.post('/fetchTeamdata/fetchintable/:eventname',teamcontrol.showdata)
 
 
 const dat=require('../controller/EventControl');
-app.get('/fettchevent/:type',dat.fetchdata);
+app.get('/fettchevent/:type',dat.fetchdataandroid);
+app.get('/fettchevent/website/:type',dat.fetchdata);
+
 app.get('/fettcheventbyid/:type',dat.fetchdatabyid);
 
 

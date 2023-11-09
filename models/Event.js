@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const eventSchema = new mongoose.Schema({
   eventName: {
     type: String,
-    unique: true
+    unique: true,
   },
   eventDesc: {
     type: String,
@@ -32,16 +32,20 @@ const eventSchema = new mongoose.Schema({
   eventImage: {
     type: String,
   },
-  facultycordinator:{
-    type:[String]
+  facultycordinator: {
+    type: [String],
   },
-  facultycordinatorphone:{
-    type:[String]
+  facultycordinatorphone: {
+    type: [String],
   },
-  docUrl:{
-    type:String,
-    default:null,
-  }
+  docUrl: {
+    type: String,
+    default: null,
+  },
+  eventClosed: {
+    type: String,
+    default: "False",
+  },
 });
 
 const Event = mongoose.model("Event", eventSchema);
