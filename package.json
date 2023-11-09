@@ -24,6 +24,7 @@
     "fs": "^0.0.1-security",
     "json-2-csv": "^4.1.0",
     "json2csv": "^6.0.0-alpha.2",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.5.3",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.5",

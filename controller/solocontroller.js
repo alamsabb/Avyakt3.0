@@ -10,10 +10,10 @@ exports.addData = async (req, res) => {
     let ipblocked = await ipdb.findOne({
       ip: ipAddress,
     });
-    if (!ipblocked || ipblocked.count < 20){
+    if (!ipblocked || ipblocked.count < 20) {
       let { name, rollno, eventname, email, phone, gender } = req.body;
       console.log(eventname);
-  
+
       const emailroll = email.split(".");
       const trimedroll = rollno.trim();
       const userrollExist = await solo.findOne({
@@ -35,7 +35,7 @@ exports.addData = async (req, res) => {
             eventname,
             email,
             name,
-            eventtype:'solo'
+            eventtype: "solo",
           });
           console.log("New user added");
           return res.status(200).json({
@@ -55,7 +55,7 @@ exports.addData = async (req, res) => {
               eventname,
               email: userrollExist.email,
               name,
-              eventtype:'solo'
+              eventtype: "solo",
             });
             return res.status(200).json({
               message: "Event Added",
@@ -67,12 +67,11 @@ exports.addData = async (req, res) => {
           message: "Add your official mail of Giet",
         });
       }
-    }else{
+    } else {
       return res.status(405).json({
-        message:"you have tried to spam the server so you have been blocked"
+        message: "you have tried to spam the server so you have been blocked",
       });
     }
-   
   } catch (error) {
     console.error(error);
 
@@ -89,41 +88,40 @@ exports.addData = async (req, res) => {
   }
 };
 
-exports.showData = async (req, res) => {
-  res.status(400);
-};
-
 exports.fetchcsv = async (req, res) => {
   try {
     const { eventname, gender } = req.params;
     let users = [];
-   if(gender==='all'){
-    const userdata = await solo.find({ eventname: eventname });
-    // console.log(userdata);
-    userdata.forEach((user) => {
-      const { name, rollno, email, phone, gender } = user;
-      users.push({ rollno, name, email, phone, gender });
-    });
-    // console.log(users);
-    if (users.length === 0) {
-      return res.status(400).json({
-        message: `no user registerd for ${eventname} or no event is present`,
+    if (gender === "all") {
+      const userdata = await solo.find({ eventname: eventname });
+      // console.log(userdata);
+      userdata.forEach((user) => {
+        const { name, rollno, email, phone, gender } = user;
+        users.push({ rollno, name, email, phone, gender });
       });
-    }
-   }else{
-    const userdata = await solo.find({ eventname: eventname, gender: gender });
-    // console.log(userdata);
-    userdata.forEach((user) => {
-      const { name, rollno, email, phone, gender } = user;
-      users.push({ rollno, name, email, phone, gender });
-    });
-    // console.log(users);
-    if (users.length === 0) {
-      return res.status(400).json({
-        message: `no user registerd for ${eventname} or no event is present`,
+      // console.log(users);
+      if (users.length === 0) {
+        return res.status(400).json({
+          message: `no user registerd for ${eventname} or no event is present`,
+        });
+      }
+    } else {
+      const userdata = await solo.find({
+        eventname: eventname,
+        gender: gender,
       });
+      // console.log(userdata);
+      userdata.forEach((user) => {
+        const { name, rollno, email, phone, gender } = user;
+        users.push({ rollno, name, email, phone, gender });
+      });
+      // console.log(users);
+      if (users.length === 0) {
+        return res.status(400).json({
+          message: `no user registerd for ${eventname} or no event is present`,
+        });
+      }
     }
-   }
     const csvfield = ["Roll no", "Name", "Email", "phone", "gender"];
     const csvparser = new parser({ csvfield });
     const csvdsata = csvparser.parse(users);
@@ -137,6 +135,22 @@ exports.fetchcsv = async (req, res) => {
   } catch (error) {
     return res.status(400).json({
       message: error.message,
+    });
+  }
+};
+exports.showData = async (req, res) => {
+  try {
+    const { eventname } = req.params;
+    // console.log(req.params);
+    const data = await solo.find({ eventname: eventname });
+    return res.status(200).json({
+      message: "data fetched",
+      data,
+      length: data.length,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Request can't be proccesed",
     });
   }
 };

@@ -10,9 +10,11 @@ app.get('/health',(req,res)=>{
 
 const solocontrol=require('../controller/solocontroller');
 app.get('/fetchcsv/:eventname/:gender',solocontrol.fetchcsv);
+app.post('/fetchdata/fetchintable/:eventname',solocontrol.showData)
 
 const teamcontrol=require('../controller/teamControl');
 app.get('/fetchTeamcsv/:eventname',teamcontrol.teamfetchcsv);
+app.post('/fetchTeamdata/fetchintable/:eventname',teamcontrol.showdata)
 
 
 const dat=require('../controller/EventControl');

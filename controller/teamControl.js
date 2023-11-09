@@ -227,3 +227,21 @@ exports.teamfetchcsv = async (req, res) => {
     });
   }
 };
+
+exports.showdata=async (req,res)=>{
+  try {
+    const {eventname}=req.params;
+    // console.log(req.params);
+    const data=await team.find({eventname:eventname});
+    return res.status(200).json({
+      message:"data fetched",
+      data,
+      length:data.length,
+    })
+  } catch (error) {
+    return res.status(500).json({
+      message:"Request can't be proccesed"
+    })
+    
+  }
+}

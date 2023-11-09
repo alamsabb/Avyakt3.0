@@ -77,4 +77,7 @@ app.get('/ip2', (request, response) => response.send(request.headers['x-forwarde
 const DreamTeam = require("../controller/DreamTeam");
 app.get("/Dream-Team",DreamTeam.getDreeamTeam);
 
+const auth=require("../controller/AuthController");
+app.post("/login",auth.login);
+
 module.exports = app;
