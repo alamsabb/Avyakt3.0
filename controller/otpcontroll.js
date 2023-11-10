@@ -7,6 +7,7 @@ const ipdb = require("../models/ipblock");
 const requestIP = require("request-ip");
 
 exports.sendotp = async (req, res) => {
+  console.log(req.headers['x-webapp']);
   try {
     const pattern = /^[0-9]{2}(cse|cseaiml|cseds|cst|bca|mca)\d+\.\w+@giet\.edu$/;
     const ipAddress = requestIP.getClientIp(req);

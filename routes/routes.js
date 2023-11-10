@@ -57,7 +57,9 @@ const otplim = limit({
 });
 
 const otpcontrol = require("../controller/otpcontroll");
-app.post("/sendotp", otplim, otpcontrol.sendotp);
+// app.post("/sendotp", otplim, otpcontrol.sendotp);
+const headermiddle=require('../middleware/checkValidReq');
+app.post("/sendotp", headermiddle.validate,otplim, otpcontrol.sendotp);
 app.post("/verifyotp", otplim, otpcontrol.verifyOtp);
 
 // add event data
@@ -72,8 +74,8 @@ app.get('/ip', (request, response) => response.send(request.ip))
 app.get('/ip2', (request, response) => response.send(request.headers['x-forwarded-for']))
 
 
-// const report=require('../controller/Report');
-// app.get('/report',report.genreport);
+const report=require('../controller/Report');
+app.get('/report',report.genreport);
 const DreamTeam = require("../controller/DreamTeam");
 app.get("/Dream-Team",DreamTeam.getDreeamTeam);
 

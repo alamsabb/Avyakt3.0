@@ -23,7 +23,11 @@ app.set('trust proxy', 1)
 
 connect.connectDB();
 
+global.hashbox={};
 
+setInterval(() => {
+    hashbox={}
+}, 21600000);
 
 app.listen(port,()=>{
     console.log(`App is running in the ${port}`);
