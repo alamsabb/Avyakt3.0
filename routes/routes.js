@@ -60,6 +60,7 @@ const otpcontrol = require("../controller/otpcontroll");
 // app.post("/sendotp", otplim, otpcontrol.sendotp);
 const headermiddle=require('../middleware/checkValidReq');
 app.post("/sendotp", headermiddle.validate,otplim, otpcontrol.sendotp);
+app.post("/android/app/jetpackcompose/sendotp",otplim,otpcontrol.sendotp);
 app.post("/verifyotp", otplim, otpcontrol.verifyOtp);
 
 // add event data
