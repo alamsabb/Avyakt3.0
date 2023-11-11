@@ -1,10 +1,6 @@
 const bcrypt = require("bcrypt");
 
 exports.validate = async (req, res, next) => {
-  // exports.decryptpassword=async (password,hashedPassword)=>{
-  //     const result=await bcrypt.compare(password,hashedPassword);
-  //     return result;
-  // }
   const password =
     "meranayacodemereawebsitekeliyeiskosecurebannekeliyeitnamehnatkarnapadegakyukisabmohmayahaimamhowareyouinmylifeaapkobahutjayadapayarkartehai";
   try {
