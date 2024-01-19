@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 
 exports.validate = async (req, res, next) => {
   const password =
-    "meranayacodemereawebsitekeliyeiskosecurebannekeliyeitnamehnatkarnapadegakyukisabmohmayahaimamhowareyouinmylifeaapkobahutjayadapayarkartehai";
+    "";
   try {
     const hash = req.headers["x-webapp"];
     if(hash in hashbox){

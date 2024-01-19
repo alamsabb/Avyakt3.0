@@ -20,8 +20,8 @@ app.use('/',routes);
 app.use('/fetchdata',fetch);
 app.set('trust proxy', 1)
 
-// const report=require('./routes/repoert');
-// app.use('/r',report)
+const report=require('./routes/report');
+app.use('/r',report);
 
 
 connect.connectDB();

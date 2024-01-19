@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const SECRET='AVYAKT3.0@COMPUTERCSEDEPT'
+const SECRET=''
 
 
 exports.isAuth = (req,res,next)=>{

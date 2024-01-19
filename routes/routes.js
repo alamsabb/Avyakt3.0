@@ -3,7 +3,7 @@ const app = express();
 const limit = require("express-rate-limit");
 const requestIP = require("request-ip");
 const ipdb = require("../models/ipblock");
-
+// LIMITER FOR RRQUEST
 const lim = limit({
   windowMs: 20 * 1000,
   max: 5,
@@ -11,7 +11,7 @@ const lim = limit({
 app.get("/health", (req, res) => {
   return res.send("app is runnind fine");
 });
-
+// LIMITER FOR OTP
 const otplim = limit({
   windowMs: 5 * 60 * 1000,
   max: 6,
@@ -60,15 +60,18 @@ const otpcontrol = require("../controller/otpcontroll");
 // app.post("/sendotp", otplim, otpcontrol.sendotp);
 const headermiddle=require('../middleware/checkValidReq');
 app.post("/sendotp", headermiddle.validate,otplim, otpcontrol.sendotp);
+// ANDROID END POINTS
 app.post("/android/app/jetpackcompose/sendotp",otplim,otpcontrol.sendotp);
+// TO VERIFY THE OTP
 app.post("/verifyotp", otplim, otpcontrol.verifyOtp);
 
-// add event data
 const isvarify = require("../middleware/isverified");
 const solocontrol = require("../controller/solocontroller");
+// FOR SOLO REGISTRATION
 app.post("/registersolo", lim, isvarify.isverified, solocontrol.addData);
 
 const teamcontrol = require("../controller/teamControl");
+// FOR TEAM REGISTRATION
 app.post("/addteam", lim,isvarify.isverified, teamcontrol.addTeam);
 
 app.get('/ip', (request, response) => response.send(request.ip))

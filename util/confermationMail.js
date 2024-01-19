@@ -1,11 +1,10 @@
 const nodemailer = require("nodemailer");
 
 exports.ConfrmReg = async (data) => {
-  const APP_EMAIL = "csefest@giet.edu";
-  const APP_PASSWORD = "kdhbaekmtjvhteaa";
+  const APP_EMAIL = "";
+  const APP_PASSWORD = "";
 
-  // const APP_EMAIL = "cseob20@gmail.com";
-  // const APP_PASSWORD = "zyrhfzqauxxunvki";
+  
   try {
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",

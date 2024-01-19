@@ -1,5 +1,5 @@
 const mongooes=require('mongoose');
-const url='mongodb+srv://csefest:csefestavyakt3.0@avyakt.ivia67w.mongodb.net/Avyakt3'
+const url=''
 exports.connectDB=async()=>{
     await mongooes.connect(url)
     .then(()=>{
